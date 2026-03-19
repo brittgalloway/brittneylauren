@@ -47,13 +47,13 @@ p {
 h1,
 h2 {
     font-family: var(--title-font);
-    font-size: 4rem;
+    font-size: 4em;
     color: var(--primary-brand_green);
 }
 
 #envelope {
     display: grid;
-    justify-content: space-between;
+    justify-content: center;
     width: 75%;
     gap:1rem;
     background: var(--secondary-brand_green);
@@ -78,14 +78,14 @@ h1 {
             max-width: 50%;
         }
     }
-    @media (width >= 1024px) {
+    @media (width >= 768px) {
         align-content: end;
         grid-column: 1 / 3;
         grid-row: 1 / 2;
     }
 }
 #comingsoon{
-    @media (width >= 1024px) {
+    @media (width >= 768px) {
         align-content: end;
         grid-column: 1 / 3;
         grid-row: 2 / 3;
@@ -93,19 +93,19 @@ h1 {
 }
 #stamp {
     justify-self: end;
-    align-self: center;
+    align-self: flex-start;
     padding: 1rem;
-    @media (width >= 1024px) {
-        max-width: 50%;
+    @media (width >= 768px) {
         grid-column: 2/3;
         grid-row: 1/2;
+        max-width: 50%;
     }
 }
 
 #leaf {
     max-width: 80px;
     justify-items: left;
-    @media (width >= 1024px) {
+    @media (width >= 768px) {
         max-width: 125px;
         grid-column: 1 / 2;
         grid-row: 3 / 4;
