@@ -2,14 +2,16 @@
     font-family: 'Miriam Fixed Regular';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/mriamc.ttf') format('truetype');
+    font-display: swap;
+    src: url('../assets/fonts/mriamc.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Wanderlust Shine Pro';
     font-style: normal;
-    font-weight: bold;
-    src: url('../fonts/WanderlustShinePro.otf') format('OpenType');
+    font-weight: 700;
+    font-display: swap;
+    src: url('../assets/fonts/WanderlustShinePro.otf') format('opentype');
 }
 
 :root {
