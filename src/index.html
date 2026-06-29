@@ -52,8 +52,9 @@
                             placeholder=" "
                             x-model="fields.name"
                             autocomplete="name"
+                            required
                             :aria-invalid="errors.name ? 'true' : 'false'"
-                            aria-describedby="name-error"
+                            aria-errormessage="name-error"
                             @blur="validateField('name')"
                         >
                         <label for="name">Name:</label>
@@ -70,7 +71,7 @@
                             autocomplete="email"
                             required
                             :aria-invalid="errors.email ? 'true' : 'false'"
-                            aria-describedby="email-error"
+                            aria-errormessage="email-error"
                             @blur="validateField('email')"
                         >
                         <label for="email">Email:</label>
@@ -119,7 +120,7 @@
         <p>Copyright Brittney Lauren 2026</p>
     </footer>
 
-    <script src="./js/signup-form.js"></script>
+    <script src="./javascript/signup-form.js"></script>
 </body>
 
 </html>

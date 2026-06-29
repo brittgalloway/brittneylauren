@@ -170,14 +170,15 @@
     color: transparent;
 }
 
-.field-error:has(input:invalid) {
+.field-error {
+    margin-top: 5px;
     font-size: 0.8rem;
+    font-weight: bold;
     color: var(--error-red);
-    margin-top: 0.35rem;
 }
 
 .field--error input,
-input:invalid {
+[aria-invalid="true"] {
     border-bottom-color: var(--error-red);
 }
 
