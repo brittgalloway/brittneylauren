@@ -18,17 +18,12 @@
 <body>
     <a class="skip-link" href="#signup-heading">Skip to sign-up form</a>
 
-    <!--
-        #scene is the shared stacking context. Both the mailbox SVG and the
-        envelope card sit in the same grid cell (grid-area: 1/1) so the
-        mailbox renders behind the envelope without any absolute positioning.
-        The success message is a sibling — not inside the form — so it can
-        fade in independently after the envelope animates away.
-    -->
     <main id="scene">
-
+        <div id="success-message" aria-live="polite" hidden>
+            <p>You're on the list!<br>Watch your inbox for launch updates.</p>
+        </div>
         <div id="mailbox-container" aria-hidden="true">
-<svg id="mailbox-svg" aria-hidden="true" focusable="false" width="530" height="502" viewBox="0 0 530 502" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg id="mailbox-svg" aria-hidden="true" focusable="false" viewBox="0 0 530 502" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="mailbox-body" filter="url(#filter0_di_74_1233)">
 <path d="M521 5H11C8.79086 5 7 6.79086 7 9V489C7 491.209 8.79086 493 11 493H521C523.209 493 525 491.209 525 489V9C525 6.79086 523.209 5 521 5Z" fill="#35498E"/>
 <path d="M521 3.5H11C7.96243 3.5 5.5 5.96243 5.5 9V489C5.5 492.038 7.96243 494.5 11 494.5H521C524.038 494.5 526.5 492.038 526.5 489V9C526.5 5.96243 524.038 3.5 521 3.5Z" stroke="#253777" stroke-width="3"/>
@@ -76,11 +71,7 @@
 </g>
 <defs>
 <!-- Clips the envelope to the region BELOW the mail slot during the fly-in
-     animation. As the envelope translates upward, GSAP progressively hides
-     it above this boundary, making it appear to slide inside the mailbox.
-     Coordinates match the mailbox face: slot top edge is at y≈177, the
-     full SVG width is 530. We extend slightly beyond the SVG bounds (–10,
-     540) so the envelope doesn't clip on the sides during the tilt. -->
+     animation. slot top edge is at y≈177 -->
 <clipPath id="slot-clip" clipPathUnits="userSpaceOnUse">
   <rect x="-10" y="184" width="550" height="320"/>
 </clipPath>
@@ -269,17 +260,6 @@
             >
 
         </article>
-        </div><!-- #envelope-wrapper -- the envelope so it can fade in
-            independently after the envelope animates into the mailbox.
-            aria-live="polite" means screen readers announce it without
-            interrupting whatever they were saying, which is less jarring
-            than role="alert" for a non-error outcome.
-            The hidden attribute is toggled by JS — not x-show — because
-            Alpine is no longer managing this element after the form
-            submits successfully.
-        -->
-        <div id="success-message" aria-live="polite" hidden>
-            <p>You're on the list!<br>Watch your inbox for launch updates.</p>
         </div>
 
     </main>

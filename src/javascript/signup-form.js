@@ -27,18 +27,25 @@ function playMailAnimation() {
     return;
   }
 
+  gsap.set(envelope, {
+    rotateX: 0,
+    y: 0,
+    z: 0,
+    transformPerspective: 1100,
+    transformOrigin: 'center bottom',
+  });
+
   const tl = gsap.timeline({ onComplete: showSuccess });
 
   tl
     // Step 1 — tilt back and rise simultaneously
     .to(envelope, {
-      transformPerspective: 800,
+      transformPerspective: 1100,
       rotateX: 60,
       y: '-55vh',
       z: -10,
       duration: 0.6,
-      ease: 'power2.in',
-      transformOrigin: 'center bottom',
+      ease: 'power1.in',
     })
 
     // Step 2 — re-measure after step 1, center over slot and push back in z
@@ -47,19 +54,21 @@ function playMailAnimation() {
       const envRect  = envelope.getBoundingClientRect();
 
       tl.to(envelope, {
-        transformPerspective: 800,
+        transformPerspective: 1000,
         rotateX: 100,
         x: (slotRect.left + slotRect.width  / 2) - (envRect.left + envRect.width  / 2),
         y: `+=${(slotRect.top + slotRect.height / 2) - (envRect.top + envRect.height / 2)}`,
         z: `-=500`,
         duration: 0.7,
-        transformOrigin: 'center bottom',
-      }).to(envelope, {
+        ease:'none',
+      })
+      .to(envelope, {
         rotateX: 60,
-        y: `+=30`,
+        y: `+=${(slotRect.top + slotRect.height / 2)}`,
         z: `-=30`,
-        duration: 0.3,
-        ease: 'power2.inout',
+        scale: 0.9,
+        duration: 0.5,
+        ease: 'none',
       })
 
       // Step 3 — clip the envelope so it appears to slide into the slot.
@@ -79,13 +88,13 @@ function playMailAnimation() {
 
         tl.to(envelope, {
           transformPerspective: 1000,
-          rotateX: 60,
+          rotateX: 0,
           x: `+=${(slotRect2.left + slotRect2.width  / 2) - (envRect2.left + envRect2.width  / 2)}`,
-          y: `-=${(envRect2.top  + envRect2.height) + (envRect2.left + envRect2.width  / 2)}`,
+          y: `-=${(envRect2.top  + envRect2.height) * 2}`,
           z: `-=2000`,
-          duration: 1,
-          ease: 'power2.out',
-          transformOrigin: 'center bottom',
+          scale: 0.6,
+          duration: 1.5,
+          ease: 'power1.out',
         }).to(envelope, {
           opacity:0,
           duration: 0,
@@ -107,8 +116,8 @@ function showSuccess() {
 
   gsap.fromTo(
     success,
-    { opacity: 0, y: 24 },
-    { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }
+    { opacity: 0, y: -200 },
+    { opacity: 1, y: -260, duration: 1, ease: 'power2.out' }
   );
 }
 
