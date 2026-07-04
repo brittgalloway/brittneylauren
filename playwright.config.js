@@ -11,7 +11,7 @@ export default defineConfig({
   reporter: 'html',
 
   use: {
-    baseURL: 'http://127.0.0.1:5500/src/',
+    baseURL: 'http://localhost:3000',
     // Keep traces on first retry so failures are diagnosable.
     trace: 'on-first-retry',
   },
