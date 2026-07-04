@@ -1,0 +1,69 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    name: Run Playwright tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # Dev stub — CI never hits the real MailerLite API.
+      # The subscribe function checks NODE_ENV !== 'production' before
+      # using this, so it's safe to set here.
+      DEV_SUBSCRIBE_RESULT: success
+      # Real API key stored in GitHub → Settings → Secrets and variables
+      # → Actions → New repository secret. The function won't reach
+      # MailerLite in CI (stub intercepts first), but the key must be
+      # present or the function returns a 500 before the stub runs.
+      MAILERLITE_API_KEY: ${{ secrets.MAILERLITE_API_KEY }}
+      MAILERLITE_GROUP_ID_LANDING_PAGE: ${{ secrets.MAILERLITE_GROUP_ID_LANDING_PAGE }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Start vercel dev
+        run: vercel dev --listen 3000 &
+        env:
+          BL_VERCEL_TOKEN: ${{ secrets.BL_VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Wait for dev server to be ready
+        run: npx wait-on http://localhost:3000 --timeout 30000
+
+      - name: Run Playwright tests
+        run: npm test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14

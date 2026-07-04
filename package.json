@@ -1,6 +1,18 @@
 {
   "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:a11y": "playwright test tests/accessibility.spec.js",
+    "test:api": "playwright test tests/api.spec.js"
+  },
   "dependencies": {
     "gsap": "^3.14.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@axe-core/playwright": "^4.10.0",
+    "wait-on": "^8.0.0"
   }
 }
