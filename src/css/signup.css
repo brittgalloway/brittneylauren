@@ -1,27 +1,96 @@
 /* ===========================================================
-   Card / envelope container
+   Scene — shared stacking context for mailbox + envelope
    =========================================================== */
+
+/*
+   Both #mailbox-container and #envelope-wrapper share grid-area: 1 / 1
+   so they occupy the same cell. The mailbox paints first (behind), the
+   envelope wrapper paints on top. No absolute positioning needed.
+*/
+#scene {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+#mailbox-container {
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 560px;
+    align-self: center;
+    justify-self: center;
+    margin-top: 4rem;
+}
+
+#mailbox-container svg {
+    height: auto;
+    display: block;
+}
+
+/* #envelope-wrapper never moves — it receives the clip-path during
+   the animation so the envelope appears to slide into the slot. */
+#envelope-wrapper {
+    grid-area: 1 / 1;
+    width: 100%;
+    z-index: 1;
+}
+
+/* ===========================================================
+Card / envelope container
+=========================================================== */
 
 #envelope {
     display: grid;
-    justify-content: center;
-    width: 100%;
-    max-width: 600px;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    justify-self: center;
+    width: 90vw;
+    max-width: 1090px;
     gap: 1.5rem;
     background: var(--secondary-brand-green);
-    filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.25));
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.25);
     padding: 2rem 1.5rem 2.5rem;
 }
 
 @media (width >= 768px) {
+    #scene {
+        padding: 2rem 1rem 4rem;
+    }
+
+    #mailbox-container {
+        margin-top: 5rem;
+    }
+
     #envelope {
-        grid-template-columns: 3fr 1fr;
-        grid-template-rows: auto auto 1fr;
-        width: 100%;
-        max-width: 1090px;
         gap: 0 1rem;
         padding: 2.5rem 3rem 3rem;
     }
+}
+
+/* ===========================================================
+   Success message — fades in after the envelope animates away
+   =========================================================== */
+
+#success-message {
+    grid-area: 1 / 1;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 2;
+}
+
+#success-message p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-green);
+}
+
+#success-message[hidden] {
+    display: none;
 }
 
 /* ===========================================================
@@ -44,6 +113,7 @@
     max-width: 320px;
     height: auto;
 }
+
 #signup-heading {
     color: var(--text-green);
     font-family: var(--text-font);
@@ -108,7 +178,6 @@
     }
 }
 
-
 #comingsoon {
     font-size: 0.95rem;
     line-height: 1.5;
@@ -158,9 +227,6 @@
     width: 100%;
 }
 
-/* When the field has content or focus, shrink the label up out of the way,
-   the same way a floating-label pattern works, while never relying on
-   ::placeholder (which disappears and which assistive tech support varies). */
 .field input:focus + label,
 .field input:not(:placeholder-shown) + label {
     transform: translateY(-0.85rem) scale(0.72);
