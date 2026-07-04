@@ -114,4 +114,6 @@ input:focus-visible,
 button:focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
+footer {
+    font-size: 0.75rem;
 }
