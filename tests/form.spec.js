@@ -1,8 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
+  // Intercept CDN requests and serve from node_modules so tests don't
+  // depend on external network access in CI.
+  await page.route('**cdnjs.cloudflare.com/**alpinejs**', route =>
+    route.fulfill({ path: 'node_modules/alpinejs/dist/cdn.min.js' })
+  );
+  await page.route('**cdnjs.cloudflare.com/**gsap**', route =>
+    route.fulfill({ path: 'node_modules/gsap/dist/gsap.min.js' })
+  );
   await page.goto('/src/');
-  // Wait for Alpine to initialise before interacting with the form.
   await page.waitForFunction(() => window.Alpine !== undefined);
 });
 
@@ -215,6 +222,12 @@ test('success shows without animation when prefers-reduced-motion is set', async
   });
   const page = await context.newPage();
 
+  await page.route('**cdnjs.cloudflare.com/**alpinejs**', route =>
+    route.fulfill({ path: 'node_modules/alpinejs/dist/cdn.min.js' })
+  );
+  await page.route('**cdnjs.cloudflare.com/**gsap**', route =>
+    route.fulfill({ path: 'node_modules/gsap/dist/gsap.min.js' })
+  );
   await page.goto('/src/');
   await page.waitForFunction(() => window.Alpine !== undefined);
 
