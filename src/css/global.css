@@ -63,7 +63,7 @@ body {
     background: var(--off-white);
     min-height: 100vh;
     text-align: center;
-    color: var(--text-green);
+    color: var(--theme-accent-text);
 }
 
 main {
@@ -81,7 +81,6 @@ p {
 h1,
 h2 {
     font-family: var(--title-font);
-    color: var(--text-green);
 }
 
 footer {
@@ -116,4 +115,5 @@ button:focus-visible {
   outline-offset: var(--focus-ring-offset);
 footer {
     font-size: 0.75rem;
+}
 }

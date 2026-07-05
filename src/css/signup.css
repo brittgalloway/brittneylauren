@@ -53,6 +53,13 @@ Card / envelope container
     background: var(--secondary-brand-green);
     box-shadow: 0 4px 6px rgb(0 0 0 / 0.25);
     padding: 2rem 1.5rem 2.5rem;
+    /* Smooth background color transition between themes */
+    transition: background-color 0.4s ease;
+    /* Theme accent token — overridden per-theme by theme-cycle.js.
+       Falls back to the existing brand green so the initial state
+       matches the green theme before JS runs. */
+    --theme-accent: var(--primary-brand-green);
+    --theme-accent-text: var(--text-green);
 }
 
 @media (width >= 768px) {
@@ -93,9 +100,10 @@ Card / envelope container
     display: none;
 }
 
-/* ===========================================================
-   Logo (top-left)
-   =========================================================== */
+/* Stamp letter paths pick up --stamp-letter-color; transition the fill smoothly */
+#stamp svg path {
+    transition: fill 0.4s ease;
+}
 
 .logo-link {
     display: inline-block;
@@ -115,7 +123,6 @@ Card / envelope container
 }
 
 #signup-heading {
-    color: var(--text-green);
     font-family: var(--text-font);
     font-size: 1.5rem;
 }
@@ -222,7 +229,7 @@ Card / envelope container
     color: var(--text-green);
     background: var(--white);
     border: none;
-    border-bottom: 2px solid var(--primary-brand-green);
+    border-bottom: 2px solid var(--theme-accent);
     padding: 1.1rem 1rem 0.5rem;
     width: 100%;
 }
@@ -245,23 +252,23 @@ Card / envelope container
 
 .field--error input,
 [aria-invalid="true"] {
-    border-bottom-color: var(--error-red);
+    border-bottom-color: var(--error-red) !important;
 }
 
 #signup-form button {
     font-family: var(--text-font);
     font-size: 1rem;
-    color: var(--text-green);
-    background: var(--secondary-brand-green);
-    border: 2px solid var(--primary-brand-green);
+    color: var(--theme-accent-text);
+    background: transparent;
+    border: 2px solid var(--theme-accent);
     padding: 0.85rem 1rem;
     cursor: pointer;
     margin-top: 0.25rem;
 }
 
 #signup-form button:hover:not(:disabled) {
-    background: var(--text-green);
-    border-color: var(--text-green);
+    background: var(--theme-accent);
+    border-color: var(--theme-accent);
     color: var(--white);
 }
 
@@ -280,21 +287,26 @@ Card / envelope container
 }
 
 /* ===========================================================
-   Leaf (bottom-left, decorative)
+   Theme illustration (bottom-right, decorative)
+   Replaces the static leaf — src is swapped per theme by
+   theme-cycle.js. Width/height are set to accommodate the
+   largest illustration (foxgirl 500×500) while letting
+   smaller ones scale down naturally.
    =========================================================== */
 
-#leaf {
-    width: 90px;
+#theme-illustration {
+    width: 120px;
     height: auto;
-    justify-self: start;
+    justify-self: end;
     align-self: end;
 }
 
 @media (width >= 768px) {
-    #leaf {
-        width: 130px;
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
+    #theme-illustration {
+        width: 180px;
+        grid-column: 2 / 3;
+        grid-row: 2 / 4;
         align-self: end;
+        justify-self: end;
     }
 }

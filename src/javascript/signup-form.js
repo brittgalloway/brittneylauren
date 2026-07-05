@@ -195,6 +195,9 @@ function signupForm() {
           return;
         }
 
+        // Stop theme cycling before animating — prevents the card
+        // changing color mid-flight
+        if (typeof stopThemeCycle === 'function') stopThemeCycle();
         playMailAnimation();
 
       } catch (err) {
