@@ -255,6 +255,7 @@
                             :aria-invalid="errors.name ? 'true' : 'false'"
                             aria-errormessage="name-error"
                             @blur="validateField('name')"
+                            maxlength="200"
                         >
                         <label for="name">Name:</label>
                         <p class="field-error" id="name-error" x-show="errors.name" x-text="errors.name" role="alert">Please enter your name.</p>
@@ -272,6 +273,7 @@
                             :aria-invalid="errors.email ? 'true' : 'false'"
                             aria-errormessage="email-error"
                             @blur="validateField('email')"
+                            maxlength="250"
                         >
                         <label for="email">Email:</label>
                         <p class="field-error" id="email-error" x-show="errors.email" x-text="errors.email" role="alert">Please enter a valid email address.</p>

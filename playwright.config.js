@@ -12,22 +12,15 @@ export default defineConfig({
 
   use: {
     baseURL: 'http://localhost:3000',
-    // Keep traces on first retry so failures are diagnosable.
     trace: 'on-first-retry',
   },
 
-  // Expects `vercel dev` to already be running on port 3000.
-  // Start it manually before running tests:
-  //   vercel dev &
-  //   npx playwright test
-  //
-  // Or let Playwright start it automatically via webServer below.
-  // Uncomment if you want Playwright to manage the server:
-  //
-  // webServer: {
-  //   command: 'vercel dev',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: true,
-  //   timeout: 30_000,
-  // },
+  // IMPORTANT: tests must run against `vercel dev` on port 3000,
+
+  webServer: {
+    command: 'vercel dev --listen 3000',
+    url: 'http://localhost:3000',
+    reuseExistingServer: true,
+    timeout: 60_000,
+  },
 });

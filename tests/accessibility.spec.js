@@ -42,16 +42,56 @@ test('page has no axe violations on the success state', async ({ page }) => {
 });
 
 test('decorative images have empty alt or aria-hidden', async ({ page }) => {
-  // Leaf and mailbox are decorative — should be hidden from screen readers
-  const leaf = page.locator('#leaf');
+  // Illustration and mailbox are decorative — should be hidden from screen readers
+  const illustration = page.locator('#theme-illustration');
   const mailbox = page.locator('#mailbox-container');
 
-  const leafHidden = await leaf.getAttribute('aria-hidden');
-  const leafAlt = await leaf.getAttribute('alt');
-  expect(leafHidden === 'true' || leafAlt === '').toBeTruthy();
+  const illustrationHidden = await illustration.getAttribute('aria-hidden');
+  const illustrationAlt = await illustration.getAttribute('alt');
+  expect(illustrationHidden === 'true' || illustrationAlt === '').toBeTruthy();
 
   const mailboxHidden = await mailbox.getAttribute('aria-hidden');
   expect(mailboxHidden).toBe('true');
+});
+
+// ---------------------------------------------------------------------------
+// Themes
+// ---------------------------------------------------------------------------
+
+test('themes exist and the envelope cycles through all of them', async ({ page }) => {
+  // theme-cycle.js exposes window.__THEME_NAMES__ (see that file) purely so
+  // this can be asserted without importing internals as an ES module.
+  const themeNames = await page.evaluate(() => window.__THEME_NAMES__);
+
+  expect(Array.isArray(themeNames)).toBe(true);
+  expect(themeNames.length).toBeGreaterThan(1);
+  expect(new Set(themeNames).size).toBe(themeNames.length); // no duplicates
+
+  // Envelope should start on the first theme.
+  await expect(page.locator('#envelope')).toHaveAttribute('data-theme', themeNames[0]);
+
+  // Advance through every theme and confirm the envelope actually adopts
+  // each one's name in order. CYCLE_DURATION is 5000ms plus a 400ms fade
+  // before the attribute updates, so give each step a generous timeout
+  // rather than a fixed sleep — expect() polls until it matches.
+  for (let i = 1; i < themeNames.length; i++) {
+    await expect(page.locator('#envelope')).toHaveAttribute('data-theme', themeNames[i], {
+      timeout: 7000,
+    });
+  }
+});
+
+test('page has no axe violations after cycling to a non-default theme', async ({ page }) => {
+  const themeNames = await page.evaluate(() => window.__THEME_NAMES__);
+  test.skip(themeNames.length < 2, 'Only one theme defined, nothing to cycle to.');
+
+  // Wait for the cycle to move off the first theme.
+  await expect(page.locator('#envelope')).not.toHaveAttribute('data-theme', themeNames[0], {
+    timeout: 8000,
+  });
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
 });
 
 test('form inputs have associated labels', async ({ page }) => {
