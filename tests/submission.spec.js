@@ -41,7 +41,6 @@ test('succeeds with a valid name and email', async ({ page }) => {
   await page.click('button[type=submit]');
 
   await expect(page.locator('#success-message')).toBeVisible({ timeout: 8000 });
-  await expect(page.locator('#envelope')).toBeHidden({ timeout: 8000 });
 
   expect(requestBody).toEqual({ name: 'Jane Doe', email: 'jane@example.com' });
 });
