@@ -253,6 +253,7 @@
                             autocomplete="name"
                             required
                             :aria-invalid="errors.name ? 'true' : 'false'"
+                            aria-describedby="name-error"
                             aria-errormessage="name-error"
                             @blur="validateField('name')"
                             maxlength="200"
@@ -272,6 +273,7 @@
                             required
                             :aria-invalid="errors.email ? 'true' : 'false'"
                             aria-errormessage="email-error"
+                            aria-describedby="email-error"
                             @blur="validateField('email')"
                             maxlength="250"
                         >

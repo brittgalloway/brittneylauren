@@ -158,6 +158,8 @@ function stopThemeCycle() {
 // Init
 // ---------------------------------------------------------------------------
 
+window.__THEME_NAMES__ = THEMES.map(theme => theme.name);
+
 document.addEventListener('DOMContentLoaded', () => {
   body     = document.getElementById('body');
   envelope     = document.getElementById('envelope');

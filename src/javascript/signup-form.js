@@ -154,6 +154,8 @@ function signupForm() {
         const value = this.fields.name.trim();
         if (!value) {
           this.errors.name = 'Please enter your name.';
+        } else if (!/\p{L}/u.test(value)) {
+          this.errors.name = 'Please enter a valid name.';
         } else {
           this.errors.name = '';
         }

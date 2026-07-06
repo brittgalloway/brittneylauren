@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   await page.route('**cdnjs.cloudflare.com/**gsap**', route =>
     route.fulfill({ path: 'node_modules/gsap/dist/gsap.min.js' })
   );
-  await page.goto('/src/');
+  await page.goto('/');
   await page.waitForFunction(() => window.Alpine !== undefined);
 });
 
@@ -228,7 +228,7 @@ test('success shows without animation when prefers-reduced-motion is set', async
   await page.route('**cdnjs.cloudflare.com/**gsap**', route =>
     route.fulfill({ path: 'node_modules/gsap/dist/gsap.min.js' })
   );
-  await page.goto('/src/');
+  await page.goto('/');
   await page.waitForFunction(() => window.Alpine !== undefined);
 
   await page.route('/api/subscribe', route =>

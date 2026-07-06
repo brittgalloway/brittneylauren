@@ -41,15 +41,25 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
-      - name: Start vercel dev
-        run: vercel dev --listen 3000 &
+      - name: Pull Vercel project settings
+        run: vercel pull --yes --environment=preview --token=${{ secrets.BL_VERCEL_TOKEN }}
         env:
-          VERCEL_TOKEN: ${{ secrets.BL_VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Start vercel dev
+        run: vercel dev --listen 3000 --token=${{ secrets.BL_VERCEL_TOKEN }} --yes &
+        env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Wait for dev server to be ready
-        run: npx wait-on http://localhost:3000 --timeout 30000
+        run: npx wait-on http://localhost:3000/ --timeout 30000
+
+      - name: Sanity-check the served page
+        run: |
+          curl -sf http://localhost:3000/ | grep -q 'signup-form' \
+            || (echo "::error::/ did not return the expected page — vercel dev is not serving the app correctly" && exit 1)
 
       - name: Run Playwright tests
         run: npm test

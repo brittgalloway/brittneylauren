@@ -15,8 +15,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  // IMPORTANT: tests must run against `vercel dev` on port 3000,
-
+  // IMPORTANT: tests must run against `vercel dev` on port 3000
   webServer: {
     command: 'vercel dev --listen 3000',
     url: 'http://localhost:3000',

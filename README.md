@@ -64,7 +64,7 @@ Start the dev server (required — plain file servers won't run the API):
 vercel dev
 ```
 
-The page is served at `http://localhost:3000/src/`.
+The page is served at `http://localhost:3000/`.
 
 ## Environment variables
 

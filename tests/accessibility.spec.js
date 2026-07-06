@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.route('**cdnjs.cloudflare.com/**gsap**', route =>
     route.fulfill({ path: 'node_modules/gsap/dist/gsap.min.js' })
   );
-  await page.goto('/src/');
+  await page.goto('/');
   await page.waitForFunction(() => window.Alpine !== undefined);
 });
 
