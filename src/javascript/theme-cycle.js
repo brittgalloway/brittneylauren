@@ -23,16 +23,18 @@ const THEMES = [
     tagline:         'Stationery is an art',
     illustration:    './assets/images/leaf-design.svg',
     illustrationAlt: '',
+    illustrationPosition: 'start',
   },
   {
     name:            'warm',
-    cardBg:          '#FFFFFF',
+    cardBg:          '#F5F5F5',
     accent:          '#C28262',
     accentText:      '#8B5A3C',
     stampLetterColor:'#FCEBE3',
     tagline:         'For handwriting enthusiasts',
     illustration:    './assets/images/foxgirl.svg',
     illustrationAlt: '',
+    illustrationPosition: 'end',
   },
   {
     name:            'pink',
@@ -43,6 +45,7 @@ const THEMES = [
     tagline:         'Stationery is a human touch',
     illustration:    './assets/images/big_plane.svg',
     illustrationAlt: '',
+    illustrationPosition: 'end',
   },
   {
     name:            'blue',
@@ -53,6 +56,7 @@ const THEMES = [
     tagline:         'For those who share love',
     illustration:    './assets/images/bubbles.svg',
     illustrationAlt: '',
+    illustrationPosition: 'end',
   },
 ];
 
@@ -116,6 +120,7 @@ function setThemeValues(theme) {
   // Swap illustration
   illustration.src = theme.illustration;
   illustration.alt = theme.illustrationAlt;
+  illustration.style.setProperty('--justify', theme.illustrationPosition);
 
   // Update CSS custom property so all accent-colored elements
   // (input borders, button border, focus ring) update at once
