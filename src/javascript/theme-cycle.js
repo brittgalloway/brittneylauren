@@ -21,7 +21,7 @@ const THEMES = [
     accentText:      '#4D5742',
     stampLetterColor:'#E1EFD4',
     tagline:         'Stationery is an art',
-    illustration:    './assets/images/leaf-design.svg',
+    illustration:    './assets/images/leaf2.svg',
     illustrationAlt: '',
     illustrationPosition: 'start',
   },
