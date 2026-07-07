@@ -41,7 +41,7 @@
 
 #logo {
     width: auto;
-    max-width: 200px;
+    max-width: 180px;
     height: auto;
 }
 /* ===========================================================
@@ -308,4 +308,7 @@ Card / envelope container
     width: auto;
     grid-column: 1 / 3;
     grid-row: 2 / 4;
+    @media (width <= 768px) {
+        max-height: 150px;
+    }
 }

@@ -54,7 +54,7 @@ const THEMES = [
     accentText:      '#2D5A8A',
     stampLetterColor:'#35498E',
     tagline:         'For those who share love',
-    illustration:    './assets/images/bubbles.svg',
+    illustration:    './assets/images/mermaidv2.svg',
     illustrationAlt: '',
     illustrationPosition: 'end',
   },
